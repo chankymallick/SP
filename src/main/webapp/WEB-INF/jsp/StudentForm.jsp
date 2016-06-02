@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <sp:form action="addStudent" method="POST">
+        <sp:form action="addStudent/chanky" method="POST">
             <sp:input path="StudentId"/>
             <sp:input path="StudentName"/>    
             <input type="submit" value="Submit"/>

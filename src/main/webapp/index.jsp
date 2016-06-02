@@ -9,9 +9,9 @@
 <!DOCTYPE html>
 <html>
     
-    <body onload="window.open('empform','_self')">
-<!--      <a href="empform">Add Employee</a>  
+    <body >
+      <a href="empform">Add Employee</a>  
        <a href="viewemp">View Employees</a> 
-       <a href="studentForm">Add Student</a> -->-->
+       <a href="studentForm">Add Student</a> 
     </body>
 </html>

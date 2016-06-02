@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -53,11 +55,20 @@ public class StudentController {
           
         return new ModelAndView("viewemp","list",list);  
     }  
-    @RequestMapping(value="addStudent",method=RequestMethod.POST)
-    public ModelAndView setStudentData(@ModelAttribute("student") Student student)
+//    @RequestMapping(value="addStudent",method=RequestMethod.POST)
+//    public ModelAndView setStudentData(@ModelAttribute("student") Student student,@RequestParam("StudentId") String SID)
+//    {   
+//      return new ModelAndView("viewStudent","std",student); 
+//    }
+    
+    @RequestMapping(value="/addStudent/{userid}",method=RequestMethod.POST,produces = "application/pdf")
+    @ResponseBody
+    public String setStudentData(@ModelAttribute("student") Student student,@RequestParam("StudentId") String SID,@PathVariable("userid") String UserId)
     {   
-      return new ModelAndView("viewStudent","command",student); 
+      return SID+ " --- "+student.StudentName+"From : "+UserId;
     }
+    
+    
     @RequestMapping("/studentForm")  
     public ModelAndView showStudent(){  
          //command is a reserved request attribute name, now use <form> tag to show object data  

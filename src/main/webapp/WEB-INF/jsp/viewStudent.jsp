@@ -4,7 +4,7 @@
     Author     : Mallick
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="application/pdf" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        ${student.StudentId}<br>
-        ${student.StudentName}
+        ${std.studentId}<br>
+        ${std.studentName}
     </body>
 </html>
