@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -64,8 +66,14 @@ public class StudentController {
     @RequestMapping(value="/addStudent/{userid}",method=RequestMethod.POST,produces = "application/pdf")
     @ResponseBody
     public String setStudentData(@ModelAttribute("student") Student student,@RequestParam("StudentId") String SID,@PathVariable("userid") String UserId)
-    {   
-      return SID+ " --- "+student.StudentName+"From : "+UserId;
+    { 
+     ApplicationContext ctx = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
+     StudentDAO studentdao = (StudentDAO)ctx.getBean("StudentDAO");
+     int i= studentdao.saveStudent(student);       
+     if(i>0)
+      return SID+ " --- "+student.StudentName+" Saved Succesfully";
+     else
+      return SID+ " --- "+student.StudentName+" Not Saved";
     }
     
     
