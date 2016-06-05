@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class StudentController {
+    
+    private static final String AppCtx = "C:\\Users\\Chanky-JVM\\Documents\\NetBeansProjects\\SP\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
     
 @RequestMapping("/empform")  
     public ModelAndView showform(){  
@@ -67,7 +70,7 @@ public class StudentController {
     @ResponseBody
     public String setStudentData(@ModelAttribute("student") Student student,@RequestParam("StudentId") String SID,@PathVariable("userid") String UserId)
     { 
-     ApplicationContext ctx = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
+     ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);
      StudentDAO studentdao = (StudentDAO)ctx.getBean("StudentDAO");
      int i= studentdao.saveStudent(student);       
      if(i>0)
@@ -76,6 +79,22 @@ public class StudentController {
       return SID+ " --- "+student.StudentName+" Not Saved";
     }
     
+    
+    
+    @RequestMapping(value="/getStudentData",method=RequestMethod.GET)  
+    public ModelAndView getStudent(@RequestParam("sid") int SID){  
+        ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);
+        StudentDAO studentdao = (StudentDAO)ctx.getBean("StudentDAO");
+        Student std = studentdao.getStudent(SID);
+        return new ModelAndView("get","std",std);
+        
+    }  
+    
+     @RequestMapping("/getStudent")  
+    public ModelAndView getForm(){  
+         //command is a reserved request attribute name, now use <form> tag to show object data  
+        return new ModelAndView("get");  
+    }  
     
     @RequestMapping("/studentForm")  
     public ModelAndView showStudent(){  

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.feedtalk.springmaven;
 import org.springframework.jdbc.core.JdbcTemplate;
 /**
@@ -23,13 +22,13 @@ public class StudentDAO {
     
     public int saveStudent(Student student)
     {       
-        String Query = "INSERT INTO STUDENT VALUES ("+student.getStudentId()+","+student.getStudentName()+")";        
-        return jdbcTemplate.update(Query);
+        String Query = "INSERT INTO STUDENT (StudentId,StudentName) VALUES (?,?)";        
+        return jdbcTemplate.update(Query,student.getStudentId(),student.getStudentName());
     }
     
     public Student getStudent(int StudentID)
     {
-         String Query = "SELECT *FROM STUDENT WHERE STUDENTID="+StudentID;        
+         String Query = "SELECT STUDENTID,STUDENTNAME FROM STUDENT WHERE STUDENTID="+StudentID;        
          return jdbcTemplate.queryForObject(Query,Student.class);
     }
     
