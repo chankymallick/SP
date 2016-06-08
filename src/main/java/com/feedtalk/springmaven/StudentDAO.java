@@ -4,13 +4,18 @@
  * and open the template in the editor.
  */
 package com.feedtalk.springmaven;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 /**
  *
  * @author Mallick
  */
 public class StudentDAO {
-    private JdbcTemplate  jdbcTemplate;
+    private JdbcTemplate  jdbcTemplate; 
+    
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
@@ -25,13 +30,30 @@ public class StudentDAO {
         String Query = "INSERT INTO STUDENT (StudentId,StudentName) VALUES (?,?)";        
         return jdbcTemplate.update(Query,student.getStudentId(),student.getStudentName());
     }
-    
-    public Student getStudent(int StudentID)
+    public static final class StudentMapper implements  RowMapper<Student>
     {
-         String Query = "SELECT STUDENTID,STUDENTNAME FROM STUDENT WHERE STUDENTID="+StudentID;        
-         return jdbcTemplate.queryForObject(Query,Student.class);
+
+        @Override
+        public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
+           Student s1 =new Student();
+           s1.setStudentId(rs.getInt("StudentId"));
+           s1.setStudentName(rs.getString("StudentName"));
+           return s1;
+        }
+    
     }
     
     
+    public Student getStudent(int StudentID)
+    {
+         String Query = "SELECT * FROM STUDENT WHERE STUDENTID=?";        
+         return jdbcTemplate.queryForObject(Query,new Object[]{new Integer(StudentID)} ,new StudentMapper());
+    }
+    public List<Student> getAllStudent()
+    {
+         String Query = "SELECT * FROM STUDENT";        
+         //return jdbcTemplate.queryForObject(Query,new Object[]{new Integer(StudentID)} ,new StudentMapper());
+         return jdbcTemplate.query(Query, new StudentMapper());
+    }    
     
 }

@@ -66,7 +66,7 @@ public class StudentController {
 //      return new ModelAndView("viewStudent","std",student); 
 //    }
     
-    @RequestMapping(value="/addStudent/{userid}",method=RequestMethod.POST,produces = "application/pdf")
+     @RequestMapping(value="/addStudent/{userid}",method=RequestMethod.POST,produces = "application/pdf")
     @ResponseBody
     public String setStudentData(@ModelAttribute("student") Student student,@RequestParam("StudentId") String SID,@PathVariable("userid") String UserId)
     { 
@@ -77,17 +77,14 @@ public class StudentController {
       return SID+ " --- "+student.StudentName+" Saved Succesfully";
      else
       return SID+ " --- "+student.StudentName+" Not Saved";
-    }
-    
-    
+    }   
     
     @RequestMapping(value="/getStudentData",method=RequestMethod.GET)  
     public ModelAndView getStudent(@RequestParam("sid") int SID){  
         ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);
         StudentDAO studentdao = (StudentDAO)ctx.getBean("StudentDAO");
         Student std = studentdao.getStudent(SID);
-        return new ModelAndView("get","std",std);
-        
+        return new ModelAndView("get","std",std);        
     }  
     
      @RequestMapping("/getStudent")  
@@ -102,5 +99,34 @@ public class StudentController {
         return new ModelAndView("StudentForm","command",new Student());  
     }  
     
+     @RequestMapping("/getAllStudent")  
+    public ModelAndView showAllStudent(){  
+         //command is a reserved request attribute name, now use <form> tag to show object data  
+        ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);
+        List<Student> lst = ctx.getBean(StudentDAO.class).getAllStudent();
+         System.out.println("------------------------"+lst.size());
+        return new ModelAndView("allStudent","List",lst);
+    }  
+        
+    @RequestMapping("/getAllStudent2")  
+    public ModelAndView showAllStudent2(){  
+         //command is a reserved request attribute name, now use <form> tag to show object data  
+        ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);
+        List<Student> lst = ctx.getBean(StudentDAO.class).getAllStudent();
+         System.out.println("------------------------"+lst.size());
+         ModelAndView mvc = new ModelAndView();
+         mvc.addObject("List", lst);
+         
+         mvc.addObject("command", new Student());
+        return new ModelAndView("StudentForm","command",mvc);
+    }  
     
+    
+    @RequestMapping("/getAllStudent3")  
+    public ModelAndView showAllStudent3(){  
+         //command is a reserved request attribute name, now use <form> tag to show object data  
+        ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);
+        SimpleJDBCTemplateDao lst =ctx.getBean(SimpleJDBCTemplateDao.class);   
+         return new ModelAndView("allStudent","List",  lst.getAllStudent());
+    }  
 }

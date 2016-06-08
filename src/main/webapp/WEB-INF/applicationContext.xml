@@ -19,6 +19,9 @@
     <bean id="StudentDAO" class="com.feedtalk.springmaven.StudentDAO">
         <property  name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    <bean id="SupportDAO" class="com.feedtalk.springmaven.SimpleJDBCTemplateDao">
+        <property  name="dataSource" ref="ds"/>
+    </bean>
     
                  
 </beans>

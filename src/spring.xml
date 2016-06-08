@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc.xsd  http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+ 
+    <bean id="StudentBean"  class="SpringCore.Student">
+        <property name="StudentID" value="100"/>
+        <property name="StudentName" value="MASADDAT MALLICK"/>
+        <property name="CGPA" value="8.9"/>
+        <!--Inner Bean with Constructor Injection-->
+<!--        <property name="Marks" > 
+                  <bean id="Marks"  class="SpringCore.Marks">
+                        <constructor-arg value="80" index="0" type="int"/>
+                        <constructor-arg value="95" index="1" type="int"/>
+                  </bean>
+        </property>-->
+    </bean>
+<!--      <bean id="Marks"  class="SpringCore.Marks">
+                        <constructor-arg value="80" index="0" type="int"/>
+                        <constructor-arg value="95" index="1" type="int"/>
+      </bean>
+    -->
+    <bean id="Marks"  class="SpringCore.Marks">
+                        <constructor-arg value="80"/>
+                        <constructor-arg value="95" />
+      </bean>
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> 
+    
+                 
+</beans>
