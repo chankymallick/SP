@@ -30,7 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class StudentController {
     
-    private static final String AppCtx = "C:\\Users\\Chanky-JVM\\Documents\\NetBeansProjects\\SP\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
+   // private static final String AppCtx = "C:\\Users\\Chanky-JVM\\Documents\\NetBeansProjects\\SP\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
+    private static final String AppCtx = "E:\\AMM_WEBLOGIC_BUILD\\SpringMaven\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
     
 @RequestMapping("/empform")  
     public ModelAndView showform(){  
@@ -129,4 +130,21 @@ public class StudentController {
         SimpleJDBCTemplateDao lst =ctx.getBean(SimpleJDBCTemplateDao.class);   
          return new ModelAndView("allStudent","List",  lst.getAllStudent());
     }  
-}
+    
+     @RequestMapping("/AddStudentAJAX")
+     public ModelAndView AjaxFormSubmit() {
+     return new ModelAndView("AddStudentAJAX");
+      }
+     
+     
+     @RequestMapping("/AddStudentAJAXValue")
+     public ModelAndView AjaxFormSubmitValue(@ModelAttribute("student") Student student,@RequestParam("StudentId") int Id ,@RequestParam("StudentName") String name) {         
+            ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);     
+            StudentDAO studentdao = (StudentDAO)ctx.getBean("StudentDAO");
+            int i= studentdao.saveStudent(student);       
+            SimpleJDBCTemplateDao lst =ctx.getBean(SimpleJDBCTemplateDao.class);  
+            return new ModelAndView("allStudent","List",  lst.getAllStudent());
+     }
+     }
+     
+       

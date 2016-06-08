@@ -10,9 +10,11 @@
 <html>
     
     <body >
-      <a href="empform">Add Employee</a>  
-       <a href="viewemp">View Employees</a> 
-       <a href="studentForm">Add Student</a> 
-        <a href="getStudent">Get Student</a> 
+        <a href="empform">Add Employee</a> <br> 
+       <a href="viewemp">View Employees</a><br> 
+       <a href="studentForm">Add Student</a> <br>
+        <a href="getStudent">Get Student</a> <br>
+        <a href="getAllStudent">All Student</a> <br>
+        <a href="AddStudentAJAX">Ajax Submit Student</a> <br>
     </body>
 </html>
