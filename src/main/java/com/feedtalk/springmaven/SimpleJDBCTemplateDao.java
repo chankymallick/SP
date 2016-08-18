@@ -11,9 +11,7 @@ import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-/**
- *
- * @author Chanky-JVM
+/*@author Chanky-JVM
  */
 public class SimpleJDBCTemplateDao extends JdbcDaoSupport{
     
@@ -22,19 +20,15 @@ public class SimpleJDBCTemplateDao extends JdbcDaoSupport{
          String Query = "SELECT * FROM STUDENT";        
          //return jdbcTemplate.queryForObject(Query,new Object[]{new Integer(StudentID)} ,new StudentMapper());
          return this.getJdbcTemplate().query(Query, new StudentDAO.StudentMapper());
-    }     
-   
+    }        
    public static final class StudentMapper implements  RowMapper<Student>
     {
-
         @Override
         public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
            Student s1 =new Student();
            s1.setStudentId(rs.getInt("StudentId"));
            s1.setStudentName(rs.getString("StudentName"));
            return s1;
-        }
-    
-    }
-    
+        }    
+    }    
 }

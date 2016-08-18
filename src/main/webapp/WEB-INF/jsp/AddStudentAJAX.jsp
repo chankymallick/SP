@@ -5,12 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="core" %>
+<%@taglib  uri="http://www.springframework.org/tags/form" prefix="sp" %>
 <!DOCTYPE html>
 <html>
     <head>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     </head>
     <body>
+        <h1>${heading}</h1>
+        <sp:errors path="student"  />
         <table align="center">
         <form>
             <tr>

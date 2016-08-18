@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,8 +31,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class StudentController {
     
-   // private static final String AppCtx = "C:\\Users\\Chanky-JVM\\Documents\\NetBeansProjects\\SP\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
-    private static final String AppCtx = "E:\\AMM_WEBLOGIC_BUILD\\SpringMaven\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
+    private static final String AppCtx = "C:\\Users\\Chanky-JVM\\Documents\\NetBeansProjects\\SP\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
+    //private static final String AppCtx = "E:\\AMM_WEBLOGIC_BUILD\\SpringMaven\\src\\main\\webapp\\WEB-INF\\applicationContext.xml";
     
 @RequestMapping("/empform")  
     public ModelAndView showform(){  
@@ -49,7 +50,10 @@ public class StudentController {
         //return new ModelAndView("redirect:/viewemp");//will redirect to viewemp request mapping  
         
     }  
-      
+    @ModelAttribute
+    public void addDefaultMessage(Model model){
+    model.addAttribute("heading", "Welcome to Spring App");        
+    }
     @RequestMapping("/viewemp")  
     public ModelAndView viewemp(){  
         //write the code to get all employees from DAO  
@@ -122,7 +126,6 @@ public class StudentController {
         return new ModelAndView("StudentForm","command",mvc);
     }  
     
-    
     @RequestMapping("/getAllStudent3")  
     public ModelAndView showAllStudent3(){  
          //command is a reserved request attribute name, now use <form> tag to show object data  
@@ -138,12 +141,18 @@ public class StudentController {
      
      
      @RequestMapping("/AddStudentAJAXValue")
-     public ModelAndView AjaxFormSubmitValue(@ModelAttribute("student") Student student,@RequestParam("StudentId") int Id ,@RequestParam("StudentName") String name) {         
+     public ModelAndView AjaxFormSubmitValue(@ModelAttribute("student") Student student,BindingResult result,@RequestParam("StudentId") int Id ,@RequestParam("StudentName") String name) {         
+            if(!result.hasErrors()){         
             ApplicationContext ctx = new FileSystemXmlApplicationContext(AppCtx);     
             StudentDAO studentdao = (StudentDAO)ctx.getBean("StudentDAO");
             int i= studentdao.saveStudent(student);       
             SimpleJDBCTemplateDao lst =ctx.getBean(SimpleJDBCTemplateDao.class);  
             return new ModelAndView("allStudent","List",  lst.getAllStudent());
+            }
+            else
+            {
+             return new ModelAndView("AddStudentAJAX");
+            }
      }
      }
      

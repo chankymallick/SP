@@ -13,6 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <h1>${heading}</h1>
         <c:forEach var="std"  items="${List}">
             ${std.studentId} :  ${std.studentName} <br>
              ---------------------------------------------<br>
